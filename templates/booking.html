@@ -1,0 +1,28 @@
+
+{% extends "layout.html" %}
+{% block title %}Book {{ hall.name }}{% endblock %}
+{% block content %}
+<div class="form-card">
+  <div class="section-head"><h1>Book {{ hall.name }}</h1></div>
+  <div class="card">
+    <p class="muted">📍 {{ hall.location }} · Capacity {{ hall.capacity }}</p>
+    <form method="post">
+      <label>Full Name</label>
+      <input name="name" required placeholder="Enter your name">
+      <label>Phone Number</label>
+      <input name="phone" required pattern="[0-9]{10}" placeholder="10-digit mobile number">
+      <div class="row">
+        <div><label>Date</label><input type="date" name="date" required></div>
+        <div><label>Purpose</label><input name="purpose" required placeholder="e.g. Wedding, meeting"></div>
+      </div>
+      <div class="row">
+        <div><label>Start Time</label><input type="time" name="start" required></div>
+        <div><label>End Time</label><input type="time" name="end" required></div>
+      </div>
+      <br>
+      <button class="btn" type="submit">Submit Booking Request</button>
+      <a class="btn" style="background:#e9edf5;color:#25334a" href="{{ url_for('halls_page') }}">Cancel</a>
+    </form>
+  </div>
+</div>
+{% endblock %}

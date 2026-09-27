@@ -1,0 +1,53 @@
+
+{% extends "layout.html" %}
+{% block title %}Admin Dashboard{% endblock %}
+{% block content %}
+<div class="section-head"><h1>Admin Dashboard</h1></div>
+<div class="stats">
+  <div class="stat"><span class="muted">Total Halls</span><strong>{{ halls|length }}</strong></div>
+  <div class="stat"><span class="muted">Booking Requests</span><strong>{{ bookings|length }}</strong></div>
+  <div class="stat"><span class="muted">Maintenance</span><strong>{{ maintenance|length }}</strong></div>
+</div>
+
+<div class="section-head"><h2>Booking Requests</h2></div>
+<div class="card">
+<table>
+<thead><tr><th>ID</th><th>Applicant</th><th>Hall</th><th>Date/Time</th><th>Status</th><th>Action</th></tr></thead>
+<tbody>
+{% for b in bookings %}
+<tr>
+<td>#{{ b.id }}</td><td>{{ b.name }}<br><span class="muted">{{ b.phone }}</span></td>
+<td>{{ b.hall }}</td><td>{{ b.date }}<br>{{ b.start }}–{{ b.end }}</td>
+<td>{{ b.status }}</td>
+<td><div class="actions">
+{% if b.status == 'Pending' %}
+<a class="btn btn-small btn-success" href="{{ url_for('booking_action', booking_id=b.id, action='approve') }}">Approve</a>
+<a class="btn btn-small btn-danger" href="{{ url_for('booking_action', booking_id=b.id, action='reject') }}">Reject</a>
+{% endif %}
+</div></td>
+</tr>
+{% endfor %}
+</tbody>
+</table>
+</div>
+
+<div class="section-head"><h2>Schedule Maintenance</h2></div>
+<div class="card">
+<form method="post" action="{{ url_for('add_maintenance') }}">
+<div class="row">
+  <div><label>Hall</label><select name="hall_id">{% for h in halls %}<option value="{{ h.id }}">{{ h.name }}</option>{% endfor %}</select></div>
+  <div><label>Date</label><input type="date" name="date" required></div>
+</div>
+<label>Description</label>
+<input name="description" required placeholder="e.g. Electrical inspection">
+<br><br><button class="btn" type="submit">Add Maintenance Schedule</button>
+</form>
+</div>
+
+<div class="section-head"><h2>Maintenance Records</h2></div>
+<div class="card">
+<table><thead><tr><th>Hall</th><th>Date</th><th>Description</th><th>Status</th></tr></thead>
+<tbody>{% for m in maintenance %}<tr><td>{{ m.hall }}</td><td>{{ m.date }}</td><td>{{ m.description }}</td><td>{{ m.status }}</td></tr>{% endfor %}</tbody>
+</table>
+</div>
+{% endblock %}

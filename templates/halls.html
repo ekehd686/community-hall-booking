@@ -1,0 +1,18 @@
+
+{% extends "layout.html" %}
+{% block title %}Halls | Community Hall{% endblock %}
+{% block content %}
+<div class="section-head"><h1>Community Halls</h1><span class="muted">{{ halls|length }} halls listed</span></div>
+<div class="grid">
+{% for hall in halls %}
+  <article class="card">
+    <span class="badge badge-green">{{ hall.status }}</span>
+    <h3>{{ hall.name }}</h3>
+    <p>📍 {{ hall.location }}</p>
+    <p>👥 Capacity: {{ hall.capacity }}</p>
+    <p class="muted">Facilities: {{ hall.facilities }}</p>
+    <a class="btn" href="{{ url_for('book', hall_id=hall.id) }}">Check & Book</a>
+  </article>
+{% endfor %}
+</div>
+{% endblock %}
