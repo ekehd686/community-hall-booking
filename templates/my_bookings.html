@@ -1,0 +1,20 @@
+
+{% extends "layout.html" %}
+{% block title %}My Bookings{% endblock %}
+{% block content %}
+<div class="section-head"><h1>Booking Records</h1></div>
+<div class="card">
+<table>
+<thead><tr><th>ID</th><th>Hall</th><th>Date</th><th>Time</th><th>Purpose</th><th>Status</th></tr></thead>
+<tbody>
+{% for b in bookings %}
+<tr>
+<td>#{{ b.id }}</td><td>{{ b.hall }}</td><td>{{ b.date }}</td>
+<td>{{ b.start }}–{{ b.end }}</td><td>{{ b.purpose }}</td>
+<td><span class="badge {% if b.status == 'Approved' %}badge-green{% elif b.status == 'Pending' %}badge-yellow{% else %}badge-red{% endif %}">{{ b.status }}</span></td>
+</tr>
+{% endfor %}
+</tbody>
+</table>
+</div>
+{% endblock %}

@@ -1,0 +1,31 @@
+{% extends "layout.html" %}
+{% block title %}Home | Community Hall{% endblock %}
+{% block content %}
+<section class="hero">
+  <h1>Find. Check. Book.</h1>
+  <p>Find community and function halls around Krishnarajpete, check availability, compare public pricing and submit a booking request.</p>
+  <a class="btn btn-light" href="{{ url_for('halls_page') }}">Explore Halls</a>
+</section>
+
+<div class="section-head"><h2>Halls near Krishnarajpete</h2><a class="btn btn-small" href="{{ url_for('halls_page') }}">View All</a></div>
+<div class="grid">
+{% for hall in halls %}
+  <article class="card">
+    {% if hall.image_url %}<img class="hall-photo small" src="{{ hall.image_url }}" alt="{{ hall.name }}" loading="lazy">{% endif %}
+    <span class="badge badge-green">{{ hall.status }}</span>
+    <h3>{{ hall.name }}</h3>
+    <p class="muted">📍 {{ hall.location }}</p>
+    <p>💰 <strong>{{ hall.price }}</strong></p>
+    <p>🕘 {{ hall.hours }}</p>
+    <a class="btn btn-small" href="{{ url_for('book', hall_id=hall.id) }}">Book Hall</a>
+  </article>
+{% endfor %}
+</div>
+
+<div class="section-head"><h2>How it works</h2></div>
+<div class="grid">
+  <div class="card"><h3>1. Compare Halls</h3><p class="muted">See location, capacity, public pricing, timings, facilities and policies.</p></div>
+  <div class="card"><h3>2. Check Availability</h3><p class="muted">Choose a hall and date/time to see whether it can be booked in this prototype.</p></div>
+  <div class="card"><h3>3. Send Request</h3><p class="muted">Enter your details and submit a booking request for administrator approval.</p></div>
+</div>
+{% endblock %}

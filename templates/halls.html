@@ -1,0 +1,31 @@
+{% extends "layout.html" %}
+{% block title %}Halls | Community Hall{% endblock %}
+{% block content %}
+<div class="section-head"><h1>Community Halls in K.R. Pete</h1><span class="muted">{{ halls|length }} halls listed</span></div>
+<div class="notice">Prices, hours and policies are based on public listings checked for this student project. Confirm the final quote, availability and timings with the hall before making a real booking.</div>
+<div class="grid">
+{% for hall in halls %}
+  <article class="card hall-card">
+    {% if hall.image_url %}<img class="hall-photo" src="{{ hall.image_url }}" alt="{{ hall.name }}" loading="lazy">{% else %}<div class="hall-photo no-photo">Photo not found in the public listing</div>{% endif %}
+    <div class="hall-body">
+      <span class="badge badge-green">{{ hall.status }}</span>
+      <h3>{{ hall.name }}</h3>
+      {% if hall.name_kn %}<p class="kannada">{{ hall.name_kn }}</p>{% endif %}
+      <p>📍 {{ hall.location }}</p>
+      <p>📞 {% if hall.phone != 'Not publicly listed' %}<a class="phone" href="tel:{{ hall.phone }}">{{ hall.phone }}</a>{% else %}Not publicly listed{% endif %}</p>
+      <p>👥 Capacity: {{ hall.capacity }}</p>
+      <p>🕘 {{ hall.hours }}</p>
+      <p class="price">💰 {{ hall.price }}</p>
+      <p class="muted"><strong>Pricing:</strong> {{ hall.event_pricing }}</p>
+      <p class="muted"><strong>Facilities:</strong> {{ hall.facilities }}</p>
+      <div class="policy"><strong>Management / policies:</strong> {{ hall.management_notes }}</div>
+      <p class="rating">⭐ {{ hall.rating }}</p>
+      <div class="actions">
+        <a class="btn" href="{{ url_for('book', hall_id=hall.id) }}">Check & Book</a>
+        <a class="btn btn-outline" href="{{ hall.source_url }}" target="_blank" rel="noopener">Source</a>
+      </div>
+    </div>
+  </article>
+{% endfor %}
+</div>
+{% endblock %}
